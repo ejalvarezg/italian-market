@@ -1,66 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
 {
-    /**
-     * Determinar si el usuario puede ver los productos.
-     */
-    public function viewAny(User $user): bool
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return true; // Permite que cualquier usuario vea la lista de productos
+        return $authUser->can('ViewAny:Product');
     }
 
-    /**
-     * Determinar si el usuario puede ver un producto específico.
-     */
-    public function view(User $user, Product $product): bool
+    public function view(AuthUser $authUser, Product $product): bool
     {
-        return true; // Permite que cualquier usuario vea un producto específico
+        return $authUser->can('View:Product');
     }
 
-    /**
-     * Determinar si el usuario puede crear un nuevo producto.
-     */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return true; // Permite que cualquier usuario cree un nuevo producto
+        return $authUser->can('Create:Product');
     }
 
-    /**
-     * Determinar si el usuario puede editar un producto.
-     */
-    public function update(User $user, Product $product): bool
+    public function update(AuthUser $authUser, Product $product): bool
     {
-        return true; // Permite que cualquier usuario edite un producto
+        return $authUser->can('Update:Product');
     }
 
-    /**
-     * Determinar si el usuario puede eliminar un producto.
-     */
-    public function delete(User $user, Product $product): bool
+    public function delete(AuthUser $authUser, Product $product): bool
     {
-        return true; // Permite que cualquier usuario elimine un producto
+        return $authUser->can('Delete:Product');
     }
 
-    /**
-     * Determinar si el usuario puede restaurar un producto.
-     */
-    public function restore(User $user, Product $product): bool
+    public function deleteAny(AuthUser $authUser): bool
     {
-        return true; // Permite que cualquier usuario restaure un producto
+        return $authUser->can('DeleteAny:Product');
     }
 
-    /**
-     * Determinar si el usuario puede eliminar permanentemente un producto.
-     */
-    public function forceDelete(User $user, Product $product): bool
+    public function restore(AuthUser $authUser, Product $product): bool
     {
-        return false;
+        return $authUser->can('Restore:Product');
     }
+
+    public function forceDelete(AuthUser $authUser, Product $product): bool
+    {
+        return $authUser->can('ForceDelete:Product');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Product');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Product');
+    }
+
+    public function replicate(AuthUser $authUser, Product $product): bool
+    {
+        return $authUser->can('Replicate:Product');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Product');
+    }
+
 }
