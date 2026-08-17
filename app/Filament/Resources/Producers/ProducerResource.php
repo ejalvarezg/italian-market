@@ -9,6 +9,7 @@ use App\Filament\Resources\Producers\Pages\ViewProducer;
 use App\Filament\Resources\Producers\Schemas\ProducerForm;
 use App\Filament\Resources\Producers\Schemas\ProducerInfolist;
 use App\Filament\Resources\Producers\Tables\ProducersTable;
+use App\Filament\Resources\Producers\RelationManagers\ProductsRelationManager;
 use App\Models\Producer;
 use BackedEnum;
 use UnitEnum;
@@ -47,7 +48,7 @@ class ProducerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ProductsRelationManager::class,
         ];
     }
 

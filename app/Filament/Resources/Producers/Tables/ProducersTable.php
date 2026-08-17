@@ -31,6 +31,12 @@ class ProducersTable
                     ->searchable(),
                 TextColumn::make('phone')
                     ->searchable(),
+                TextColumn::make('products_count')
+                    ->counts('products')
+                    ->label('Total productos')
+                    ->badge()
+                    ->color('success')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
